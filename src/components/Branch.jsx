@@ -27,7 +27,9 @@ class Branch extends Component {
   render() {
     return (
       <div>
-        <div className={this.props.thestyle}>> {this.props.level} {this.props.data.name}</div>
+        <div className={this.props.thestyle} style={{paddingLeft: this.props.level * 15}}>
+          > {this.props.level} {this.props.data.name}
+          </div>
         {this.renderChildren()}
       </div>
     );

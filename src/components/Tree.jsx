@@ -32,7 +32,7 @@ class Tree extends Component {
 
   render() {
     return (
-      <div>
+      <div className="tree-branch">
         <div>{this.props.contents.name}</div>
         <div>{this.props.contents.renderChildren}</div>
         <div>Toggled: {this.props.contents.toggled.toString()}</div>

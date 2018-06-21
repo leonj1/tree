@@ -6,13 +6,16 @@ const contents = {
   name: "react-treebeard",
   foo: "bar",
   toggled: false,
+  collapsed: true,
   children: [
     {
       name: "zookeeper",
+      collapsed: true,
       children: []
     },
     {
       name: "apps",
+      collapsed: true,
       children: [
         {
           name: "abc",
@@ -32,10 +35,12 @@ const contents = {
     {
       name: "node_modules",
       loading: true,
+      collapsed: true,
       children: []
     },
     {
       name: "engines",
+      collapsed: true,
       children: [
         {
           name: "abc"
@@ -47,6 +52,7 @@ const contents = {
     },
     {
       name: "resources",
+      collapsed: true,
       children: [
         {
           name: "clusters",
