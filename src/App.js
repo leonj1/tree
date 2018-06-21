@@ -4,75 +4,75 @@ import './App.css';
 import Tree from './components/Tree';
 
 const contents = {
-    "name": "react-treebeard",
-    "toggled": false,
-    "children": [
+    name: "react-treebeard",
+    toggled: false,
+    children: [
         {
-            "name": "example",
-            "children": [
+            name: "example",
+            children: [
                 {
-                    "name": "app.js"
+                    name: "app.js"
                 },
                 {
-                    "name": "data.js"
+                    name: "data.js"
                 },
                 {
-                    "name": "index.html"
+                    name: "index.html"
                 },
                 {
-                    "name": "styles.js"
+                    name: "styles.js"
                 },
                 {
-                    "name": "webpack.config.js"
+                    name: "webpack.config.js"
                 }
             ]
         },
         {
-            "name": "node_modules",
-            "loading": true,
-            "children": []
+            name: "node_modules",
+            loading: true,
+            children: []
         },
         {
-            "name": "src",
-            "children": [
+            name: "src",
+            children: [
                 {
-                    "name": "components",
-                    "children": [
+                    name: "components",
+                    children: [
                         {
-                            "name": "decorators.js"
+                            name: "decorators.js"
                         },
                         {
-                            "name": "treebeard.js"
+                            name: "treebeard.js"
                         }
                     ]
                 },
                 {
-                    "name": "index.js"
+                    name: "index.js"
                 }
             ]
         },
         {
-            "name": "themes",
-            "children": [
+            name: "themes",
+            children: [
                 {
-                    "name": "animations.js"
+                    name: "animations.js"
                 },
                 {
-                    "name": "default.js"
+                    name: "default.js"
                 }
             ]
         },
         {
-            "name": "Gulpfile.js"
+            name: "Gulpfile.js"
         },
         {
-            "name": "index.js"
+            name: "index.js"
         },
         {
-            "name": "package.json"
+            name: "package.json"
         }
     ],
-    "active": true
+    active: true
 };
 
 class App extends Component {
@@ -86,7 +86,7 @@ class App extends Component {
                 <p className="App-intro">
                     To get started, edit <code>src/App.js</code> and save to reload.
                 </p>
-                <Tree contents={contents.toString()}/>
+                <Tree contents={contents}/>
             </div>
         );
     }

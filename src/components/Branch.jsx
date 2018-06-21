@@ -6,7 +6,7 @@ class Branch extends Component {
         this.state = {
             loading: true
         };
-        // name, children[], active, expanded, icon, level, canEdit, canDelete
+        // name, children[], active, collapsed, icon, level, canEdit, canDelete
     }
 
     render() {

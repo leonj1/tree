@@ -8,7 +8,9 @@ class Tree extends Component {
         this.state = {
             loading: true
         };
-        // name, children[], active, expanded, icon, canEdit, canDelete
+        // name, children[], active, collapsed, icon, canEdit, canDelete
+        // onChange
+        // linkable ZK paths /engines/solr/foo
     }
 
     render() {
