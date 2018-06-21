@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 class Branch extends Component {
     constructor(props) {
@@ -11,9 +12,15 @@ class Branch extends Component {
 
     render() {
         return (
-            <div>branch</div>
+            <div>
+                <div>{this.props.data.name}</div>
+            </div>
         );
     }
 }
+
+Branch.propTypes = {
+    data: PropTypes.object.isRequired
+};
 
 export default Branch;

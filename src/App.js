@@ -5,6 +5,7 @@ import Tree from './components/Tree';
 
 const contents = {
     name: "react-treebeard",
+    foo: "bar",
     toggled: false,
     children: [
         {
