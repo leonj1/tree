@@ -22,7 +22,7 @@ class Tree extends Component {
   }
 
   renderChildren() {
-    if(!this.props.contents.children) {
+    if(!this.props.contents.children || this.props.contents.collapsed) {
       return;
     }
     return this.props.contents.children.map((c) =>
