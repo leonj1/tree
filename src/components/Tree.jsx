@@ -8,11 +8,17 @@ class Tree extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      loading: true
+      loading: true,
+      level: 1,
+      style: "tree-branch"
     };
     // name, children[], active, collapsed, icon, canEdit, canDelete
     // onChange
     // linkable ZK paths /engines/solr/foo
+  }
+
+  componentWillMount() {
+    console.log("Tree style passing along: " + this.state.style);
   }
 
   renderChildren() {
@@ -20,7 +26,7 @@ class Tree extends Component {
       return;
     }
     return this.props.contents.children.map((c) =>
-      <Branch key={c.name} data={c} className="tree-branch"/>
+      <Branch key={c.name} data={c} thestyle={this.state.style} level={this.state.level + 1}/>
     );
   };
 
