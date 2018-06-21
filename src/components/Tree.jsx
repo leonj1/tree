@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import Branch from './Branch';
+import './Tree.css';
 
 class Tree extends Component {
 
@@ -14,27 +15,23 @@ class Tree extends Component {
     // linkable ZK paths /engines/solr/foo
   }
 
-  foo() {
-    // var i, result = [];
-    // for (i = 0; i < children.length; i++) {
-    //   console.log("Creating Branch:" + children[i].name);
-    //   result.push(<Branch data={children[i]}/>);
-    // }
-    // return result;
-    const children = this.props.contents.children.map((c) =>
-      <Branch key={c.name} data={c}/>
+  renderChildren() {
+    if(!this.props.contents.children) {
+      return;
+    }
+    return this.props.contents.children.map((c) =>
+      <Branch key={c.name} data={c} className="tree-branch"/>
     );
-    return children;
   };
 
   render() {
     return (
       <div>
         <div>{this.props.contents.name}</div>
-        <div>{this.props.contents.foo}</div>
+        <div>{this.props.contents.renderChildren}</div>
         <div>Toggled: {this.props.contents.toggled.toString()}</div>
         <div>Active: {this.props.contents.active.toString()}</div>
-        Foobar: {this.foo()}
+        {this.renderChildren()}
       </div>
     );
   }

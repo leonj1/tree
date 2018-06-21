@@ -10,10 +10,20 @@ class Branch extends Component {
     // name, children[], active, collapsed, icon, level, canEdit, canDelete
   }
 
+  renderChildren() {
+    if(!this.props.data.children) {
+      return;
+    }
+    return this.props.data.children.map((c) =>
+      <Branch key={c.name} data={c} className="tree-branch"/>
+    );
+  };
+
   render() {
     return (
       <div>
         <div>Branch: {this.props.data.name}</div>
+        {this.renderChildren()}
       </div>
     );
   }
