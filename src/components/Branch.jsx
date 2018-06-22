@@ -47,8 +47,8 @@ class Branch extends Component {
 
   renderExpandChildrenPlaceholder() {
     if(this.props.data.checkedHasChildren && this.props.data.children) {
-      // return this.state.collapsed ? "+" : "-";
-      return "+";
+      return this.state.collapsed ? "+" : "-";
+      // return "+";
     }
     if(!this.props.data.checkedHasChildren && this.props.data.name != "Loading") {
       return ">";
