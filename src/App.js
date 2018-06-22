@@ -63,7 +63,7 @@ const contents = {
     {
       name: "resources",
       collapsed: true,
-      checkedHasChildren: true,
+      checkedHasChildren: false,
       children: [
         {
           name: "clusters",
