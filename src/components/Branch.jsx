@@ -34,7 +34,7 @@ class Branch extends Component {
   };
 
   renderLoading() {
-    if(this.props.data.loading) {
+    if(!this.state.collapsed && this.props.data.loading) {
       var loading = {
         name: "Loading"
       };
@@ -50,7 +50,7 @@ class Branch extends Component {
       return this.state.collapsed ? "+" : "-";
       // return "+";
     }
-    if(!this.props.data.checkedHasChildren && this.props.data.name != "Loading") {
+    if(!this.props.data.checkedHasChildren && this.props.data.name !== "Loading") {
       return ">";
     }
   }
@@ -59,14 +59,15 @@ class Branch extends Component {
     return (
       <div>
         <div className={(this.props.data.loading ? "loading" : this.props.thestyle) + " " + this.state.componentType}
-             style={{paddingLeft: this.props.level * 15}}
-             onMouseOver={this.onMouseOver}
-             onMouseLeave={this.mouseOut}
-             onClick={this.clickToExpand}>
-          {this.renderExpandChildrenPlaceholder()} {this.props.level} {this.props.data.name}
+             style={{paddingLeft: this.props.level * 15}}>
+          <div  onMouseOver={this.onMouseOver}
+                onMouseLeave={this.mouseOut}
+                onClick={this.clickToExpand}>
+            {this.renderExpandChildrenPlaceholder()} {this.props.level} {this.props.data.name}
           </div>
-        {this.renderLoading()}
-        {this.renderChildren()}
+          {this.renderLoading()}
+          {this.renderChildren()}
+          </div>
       </div>
     );
   }
