@@ -1,12 +1,13 @@
 import React, {Component} from 'react';
 import './App.css';
-import Tree from './components/Tree';
+import './components/Tree.css';
+import Branch from './components/Branch';
 
 const contents = {
-  name: "react-treebeard",
+  name: "/",
   foo: "bar",
   toggled: false,
-  collapsed: true,
+  collapsed: false,
   checkedHasChildren: true,
   children: [
     {
@@ -99,7 +100,10 @@ class App extends Component {
         </header>
         <div className="app-container">
           <div className="app-left-pane">
-            <Tree contents={contents}/>
+            <Branch key="root"
+                    data={contents}
+                    thestyle="tree-branch"
+                    level={1}/>
           </div>
           <div className="app-right-pane">
             some stuff here
