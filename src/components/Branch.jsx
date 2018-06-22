@@ -48,10 +48,21 @@ class Branch extends Component {
   renderExpandChildrenPlaceholder() {
     if(this.props.data.checkedHasChildren && this.props.data.children) {
       return this.state.collapsed ? "+" : "-";
-      // return "+";
     }
     if(!this.props.data.checkedHasChildren && this.props.data.name !== "Loading") {
       return ">";
+    }
+  }
+
+  renderNodeButtons() {
+    if(!this.props.data.checkedHasChildren || this.props.data.children > 0) {
+      return;
+    }
+    if(!this.props.data.children) {
+      return <div className="zk-node-buttons">
+        <span className="zk-node-edit-button">edit</span>
+        <span className="zk-node-delete-button">delete</span>
+      </div>
     }
   }
 
@@ -60,10 +71,17 @@ class Branch extends Component {
       <div>
         <div className={(this.props.data.loading ? "loading" : this.props.thestyle) + " " + this.state.componentType}
              style={{paddingLeft: this.props.level * 15}}>
-          <div  onMouseOver={this.onMouseOver}
-                onMouseLeave={this.mouseOut}
-                onClick={this.clickToExpand}>
-            {this.renderExpandChildrenPlaceholder()} {this.props.data.name}
+          <div onMouseOver={this.onMouseOver}
+               onMouseLeave={this.mouseOut}
+               onClick={this.clickToExpand}
+               className="zk-node-container">
+            <div className="zk-node-left-pane">
+              {this.renderExpandChildrenPlaceholder()}
+              {this.props.data.name}
+            </div>
+            <div className="zk-node-right-pane">
+              {this.renderNodeButtons()}
+            </div>
           </div>
           {this.renderLoading()}
           {this.renderChildren()}

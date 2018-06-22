@@ -21,3 +21,17 @@
     cursor: progress;
     color: orange;
 }
+
+.zk-node-container {
+    display: flex;
+}
+
+.zk-node-left-pane {
+    flex: 1;
+}
+
+.zk-node-right-pane {
+    flex: 1;
+    flex-direction: row-reverse;
+}
+
