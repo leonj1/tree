@@ -19,8 +19,6 @@ class Branch extends Component {
 
   componentWillMount() {
     this.setState({collapsed: this.props.data.collapsed});
-    console.log("WillMount collapsed props value: " + this.props.data.collapsed);
-    console.log("WillMount collapsed state value: " + this.state.collapsed);
   }
 
   renderChildren() {
@@ -35,16 +33,39 @@ class Branch extends Component {
     );
   };
 
+  renderLoading() {
+    if(this.props.data.loading) {
+      var loading = {
+        name: "Loading"
+      };
+      return <Branch key="loading"
+              data={loading}
+              thestyle={this.props.thestyle}
+              level={this.props.level + 1}/>
+    }
+  }
+
+  renderExpandChildrenPlaceholder() {
+    if(this.props.data.checkedHasChildren && this.props.data.children) {
+      // return this.state.collapsed ? "+" : "-";
+      return "+";
+    }
+    if(!this.props.data.checkedHasChildren && this.props.data.name != "Loading") {
+      return ">";
+    }
+  }
+
   render() {
     return (
       <div>
-        <div className={this.props.thestyle + " " + this.state.componentType}
+        <div className={(this.props.data.loading ? "loading" : this.props.thestyle) + " " + this.state.componentType}
              style={{paddingLeft: this.props.level * 15}}
              onMouseOver={this.onMouseOver}
              onMouseLeave={this.mouseOut}
              onClick={this.clickToExpand}>
-          > {this.props.level} {this.props.data.name}
+          {this.renderExpandChildrenPlaceholder()} {this.props.level} {this.props.data.name}
           </div>
+        {this.renderLoading()}
         {this.renderChildren()}
       </div>
     );
@@ -59,7 +80,6 @@ class Branch extends Component {
   };
 
   clickToExpand = function() {
-    console.log("ClickToExpand collapsed: " + this.state.collapsed);
     this.setState({collapsed: !this.state.collapsed})
   };
 

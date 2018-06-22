@@ -43,7 +43,6 @@ class Tree extends Component {
              onMouseOver={this.onMouseOver}>
           {this.props.contents.name}
         </div>
-        {/*{this.props.contents.renderChildren}*/}
         {this.renderChildren()}
       </div>
     );

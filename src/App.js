@@ -7,15 +7,18 @@ const contents = {
   foo: "bar",
   toggled: false,
   collapsed: true,
+  checkedHasChildren: true,
   children: [
     {
       name: "zookeeper",
       collapsed: true,
+      checkedHasChildren: false,
       children: []
     },
     {
       name: "apps",
       collapsed: true,
+      checkedHasChildren: true,
       children: [
         {
           name: "abc",
@@ -23,12 +26,15 @@ const contents = {
           create_date: "2018 06 24",
           modified_date: "2018 06 24",
           access_date: "2018 06 24",
+          checkedHasChildren: true
         },
         {
-          name: "def"
+          name: "def",
+          checkedHasChildren: true
         },
         {
-          name: "ghi"
+          name: "ghi",
+          checkedHasChildren: true
         }
       ]
     },
@@ -36,35 +42,44 @@ const contents = {
       name: "node_modules",
       loading: true,
       collapsed: true,
+      checkedHasChildren: true,
       children: []
     },
     {
       name: "engines",
       collapsed: true,
+      checkedHasChildren: true,
       children: [
         {
-          name: "abc"
+          name: "abc",
+          checkedHasChildren: true
         },
         {
-          name: "def"
+          name: "def",
+          checkedHasChildren: true
         }
       ]
     },
     {
       name: "resources",
       collapsed: true,
+      checkedHasChildren: true,
       children: [
         {
           name: "clusters",
+          checkedHasChildren: true,
           children: [
             {
-              name: "abc"
+              name: "abc",
+              checkedHasChildren: true
             },
             {
-              name: "def"
+              name: "def",
+              checkedHasChildren: true,
             },
             {
-              name: "zk-ghi"
+              name: "zk-ghi",
+              checkedHasChildren: true
             }
           ]
         }
