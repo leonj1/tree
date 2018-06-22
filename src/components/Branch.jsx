@@ -63,7 +63,7 @@ class Branch extends Component {
           <div  onMouseOver={this.onMouseOver}
                 onMouseLeave={this.mouseOut}
                 onClick={this.clickToExpand}>
-            {this.renderExpandChildrenPlaceholder()} {this.props.level} {this.props.data.name}
+            {this.renderExpandChildrenPlaceholder()} {this.props.data.name}
           </div>
           {this.renderLoading()}
           {this.renderChildren()}

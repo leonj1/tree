@@ -68,6 +68,7 @@ const contents = {
         {
           name: "clusters",
           checkedHasChildren: true,
+          collapsed: true,
           children: [
             {
               name: "abc",
