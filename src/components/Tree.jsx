@@ -10,36 +10,51 @@ class Tree extends Component {
     this.state = {
       loading: true,
       level: 1,
-      style: "tree-branch"
+      style: "tree-branch",
+      collapsed: true
     };
     // name, children[], active, collapsed, icon, canEdit, canDelete
     // onChange
     // linkable ZK paths /engines/solr/foo
+    this.clickToExpand = this.clickToExpand.bind(this);
+    this.onMouseOver = this.onMouseOver.bind(this);
   }
 
   componentWillMount() {
-    console.log("Tree style passing along: " + this.state.style);
+    this.setState({collapsed: this.props.contents.collapsed});
   }
 
   renderChildren() {
-    if(!this.props.contents.children || this.props.contents.collapsed) {
+    if(!this.props.contents.children || this.state.collapsed) {
       return;
     }
     return this.props.contents.children.map((c) =>
-      <Branch key={c.name} data={c} thestyle={this.state.style} level={this.state.level + 1}/>
+      <Branch key={c.name}
+              data={c}
+              thestyle={this.state.style}
+              level={this.state.level + 1}/>
     );
   };
 
   render() {
     return (
       <div className="tree-branch">
-        <div>{this.props.contents.name}</div>
-        <div>{this.props.contents.renderChildren}</div>
-        <div>Toggled: {this.props.contents.toggled.toString()}</div>
-        <div>Active: {this.props.contents.active.toString()}</div>
+        <div onClick={this.clickToExpand}
+             onMouseOver={this.onMouseOver}>
+          {this.props.contents.name}
+        </div>
+        {/*{this.props.contents.renderChildren}*/}
         {this.renderChildren()}
       </div>
     );
+  }
+
+  clickToExpand = function() {
+    this.setState({collapsed: !this.state.collapsed})
+  };
+
+  onMouseOver = function() {
+
   }
 }
 
