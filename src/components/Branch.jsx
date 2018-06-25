@@ -16,6 +16,8 @@ class Branch extends Component {
     this.onMouseOver = this.onMouseOver.bind(this);
     this.mouseOut = this.mouseOut.bind(this);
     this.clickToExpand = this.clickToExpand.bind(this);
+    this.editingNode = this.editingNode.bind(this);
+    this.deletingNode = this.deletingNode.bind(this);
   }
 
   componentWillMount() {
@@ -23,11 +25,11 @@ class Branch extends Component {
     // if(!this.props.data.children) {
     //   should = true;
     // }
-    this.setState({collapsed: this.props.data.collapsed });
+    this.setState({collapsed: this.props.data.collapsed});
   }
 
   renderChildren() {
-    if(!this.props.data.children || this.state.collapsed) {
+    if (!this.props.data.children || this.state.collapsed) {
       return;
     }
     return this.props.data.children.map((c) =>
@@ -39,22 +41,22 @@ class Branch extends Component {
   };
 
   renderLoading() {
-    if(!this.state.collapsed && this.props.data.loading) {
+    if (!this.state.collapsed && this.props.data.loading) {
       var loading = {
         name: "Loading"
       };
       return <Branch key="loading"
-              data={loading}
-              thestyle={this.props.thestyle}
-              level={this.props.level + 1}/>
+                     data={loading}
+                     thestyle={this.props.thestyle}
+                     level={this.props.level + 1}/>
     }
   }
 
   renderExpandChildrenPlaceholder() {
-    if(this.props.data.checkedHasChildren && this.props.data.children) {
+    if (this.props.data.checkedHasChildren && this.props.data.children) {
       return this.state.collapsed ? "+" : "-";
     }
-    if(!this.props.data.checkedHasChildren && this.props.data.name !== "Loading") {
+    if (!this.props.data.checkedHasChildren && this.props.data.name !== "Loading") {
       return ">";
     }
   }
@@ -72,45 +74,60 @@ class Branch extends Component {
               {this.renderExpandChildrenPlaceholder()}
               {this.props.data.name}
             </div>
-            <div className={(this.state.showEditButtons) ? ("zk-node-right-pane zk-node-edit-buttons-show") : ("zk-node-right-pane zk-node-edit-buttons-hide")}>
+            <div
+              className={(this.state.showEditButtons) ? ("zk-node-right-pane zk-node-edit-buttons-show") : ("zk-node-right-pane zk-node-edit-buttons-hide")}>
               <div className="zk-node-buttons">
-                <span className="zk-node-edit-button">edit</span>
-                <span className="zk-node-delete-button">delete</span>
+                <span className="zk-node-edit-button"
+                      onClick={this.editingNode}>
+                  edit
+                </span>
+                <span className="zk-node-delete-button"
+                      onClick={this.deletingNode}>
+                  delete
+                </span>
               </div>
             </div>
           </div>
           {this.renderLoading()}
           {this.renderChildren()}
-          </div>
+        </div>
       </div>
     );
   }
 
-  onMouseOver = function() {
+  editingNode = function () {
+    console.log("Clicked edit");
+  };
+
+  deletingNode = function () {
+    console.log("Clicked delete");
+  };
+
+  onMouseOver = function () {
     this.setState({componentType: "current"});
-    if(!this.props.data.checkedHasChildren) {
+    if (!this.props.data.checkedHasChildren) {
       console.log("Not showing edit buttons since we have not checked if there are child nodes");
-      this.setState({ showEditButtons: false });
+      this.setState({showEditButtons: false});
       return;
     }
-    if(this.props.data.children) {
-      if(this.props.data.children.length > 0) {
+    if (this.props.data.children) {
+      if (this.props.data.children.length > 0) {
         console.log("Not showing edit buttons since this node has children");
-        this.setState({ showEditButtons: false });
+        this.setState({showEditButtons: false});
         return;
       }
     }
-    this.setState({ showEditButtons: true });
+    this.setState({showEditButtons: true});
   };
 
-  mouseOut = function() {
+  mouseOut = function () {
     this.setState({
       componentType: "sibling",
       showEditButtons: false
     });
   };
 
-  clickToExpand = function() {
+  clickToExpand = function () {
     this.setState({collapsed: !this.state.collapsed})
   };
 
