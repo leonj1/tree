@@ -46,6 +46,7 @@
 .zk-node-edit-button {
     color: orange;
     padding: 4px;
+    text-transform: uppercase;
 }
 
 .zk-node-edit-button:hover {
@@ -56,6 +57,7 @@
     color: orange;
     margin-left: 10px;
     padding: 4px;
+    text-transform: uppercase;
 }
 
 .zk-node-delete-button:hover {
