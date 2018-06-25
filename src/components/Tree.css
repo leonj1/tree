@@ -61,3 +61,20 @@
 .zk-node-delete-button:hover {
     background-color: antiquewhite;
 }
+
+.zk-path-container {
+    text-align: left;
+}
+
+.zk-path-label {
+    text-align: left;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.zk-path {
+    text-align: left;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 20px;
+}

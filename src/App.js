@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import './App.css';
 import './components/Tree.css';
 import Branch from './components/Branch';
+import ZkPath from './components/ZkPath';
 
 const contents = {
   name: "/",
@@ -92,16 +93,29 @@ const contents = {
 };
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      fullPath: ""
+    };
+    this.branchClicked = this.branchClicked.bind(this)
+  }
+
   render() {
     return (
       <div className="App">
         <header className="App-header">
           <h1 className="App-title">Tree</h1>
         </header>
+        <div className="zk-path-container">
+          <ZkPath path={this.state.fullPath}
+                  edit={this.branchClicked}/>
+        </div>
         <div className="app-container">
           <div className="app-left-pane">
             <Branch key="root"
                     parent=""
+                    clicked={this.branchClicked}
                     data={contents}
                     thestyle="tree-branch"
                     level={1}/>
@@ -112,6 +126,11 @@ class App extends Component {
         </div>
       </div>
     );
+  }
+
+  branchClicked = function(path) {
+    console.log("Clicked at root: " + path);
+    this.setState({fullPath: path});
   }
 }
 

@@ -16,7 +16,7 @@ class Branch extends Component {
     // name, children[], active, collapsed, icon, level, canEdit, canDelete
     this.onMouseOver = this.onMouseOver.bind(this);
     this.mouseOut = this.mouseOut.bind(this);
-    this.clickToExpand = this.clickToExpand.bind(this);
+    this.clicked = this.clicked.bind(this);
     this.renameNode = this.renameNode.bind(this);
     this.deletingNode = this.deletingNode.bind(this);
   }
@@ -39,6 +39,7 @@ class Branch extends Component {
               data={c}
               thestyle={this.props.thestyle}
               level={this.props.level + 1}
+              clicked={this.props.clicked}
               onDelete={this.deletingNode}/>
     );
   };
@@ -53,6 +54,7 @@ class Branch extends Component {
                      data={loading}
                      thestyle={this.props.thestyle}
                      level={this.props.level + 1}
+                     clicked={this.props.clicked}
                      onDelete={this.deletingNode}/>
     }
   }
@@ -73,7 +75,7 @@ class Branch extends Component {
              style={{paddingLeft: this.props.level * 15}}>
           <div onMouseOver={this.onMouseOver}
                onMouseLeave={this.mouseOut}
-               onClick={this.clickToExpand}
+               onClick={() => this.clicked(this.state.fullPath)}
                className="zk-node-container">
             <div className="zk-node-left-pane">
               {this.renderExpandChildrenPlaceholder()}
@@ -132,7 +134,9 @@ class Branch extends Component {
     });
   };
 
-  clickToExpand = function () {
+  clicked = function (path) {
+    console.log("Clicked at div: " + path);
+    this.props.clicked(path);
     this.setState({collapsed: !this.state.collapsed})
   };
 
@@ -145,7 +149,8 @@ Branch.propTypes = {
   thestyle: PropTypes.string.isRequired,
   level: PropTypes.number.isRequired,
   parent: PropTypes.string.isRequired,
-  onDelete: PropTypes.func.isRequired
+  onDelete: PropTypes.func.isRequired,
+  clicked: PropTypes.func.isRequired
 };
 
 export default Branch;
