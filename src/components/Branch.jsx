@@ -17,7 +17,7 @@ class Branch extends Component {
     this.onMouseOver = this.onMouseOver.bind(this);
     this.mouseOut = this.mouseOut.bind(this);
     this.clickToExpand = this.clickToExpand.bind(this);
-    this.editingNode = this.editingNode.bind(this);
+    this.renameNode = this.renameNode.bind(this);
     this.deletingNode = this.deletingNode.bind(this);
   }
 
@@ -83,8 +83,8 @@ class Branch extends Component {
               className={(this.state.showEditButtons) ? ("zk-node-right-pane zk-node-edit-buttons-show") : ("zk-node-right-pane zk-node-edit-buttons-hide")}>
               <div className="zk-node-buttons">
                 <span className="zk-node-edit-button"
-                      onClick={this.editingNode}>
-                  edit
+                      onClick={() => this.renameNode(this.state.fullPath)}>
+                  rename
                 </span>
                 <span className="zk-node-delete-button"
                       onClick={() => this.deletingNode(this.state.fullPath)}>
@@ -100,8 +100,8 @@ class Branch extends Component {
     );
   }
 
-  editingNode = function () {
-    console.log("Clicked edit");
+  renameNode = function (path) {
+    console.log("Clicked rename: " + path);
   };
 
   deletingNode = function (path) {
