@@ -129,6 +129,9 @@ class App extends Component {
   }
 
   branchClicked = function(path) {
+    if(path === "//") {
+      path = "/";
+    }
     this.setState({fullPath: path});
   }
 }
