@@ -61,31 +61,33 @@ class Branch extends Component {
 
   renderExpandChildrenPlaceholder() {
     if (this.props.data.checkedHasChildren && this.props.data.children) {
-      return this.state.collapsed ? "+" : "-";
+      return this.state.collapsed ? "▶" : "▼";
     }
     if (!this.props.data.checkedHasChildren && this.props.data.name !== "Loading") {
-      return ">";
+      return "*";
     }
   }
 
   render() {
+    const folderIndentation = 6;
+
     return (
       <div>
         {this.props.data.name === 'Loading' ? (
           <div className={this.props.thestyle + " loading"}
-               style={{paddingLeft: this.props.level * 15}}>
+               style={{paddingLeft: this.props.level * folderIndentation}}>
             Loading
           </div>
         ) : (
           <div className={this.props.thestyle + " " + this.state.componentType}
-               style={{paddingLeft: this.props.level * 15}}>
+               style={{paddingLeft: this.props.level * folderIndentation}}>
             <div onMouseOver={this.onMouseOver}
                  onMouseLeave={this.mouseOut}
                  onClick={() => this.clicked(this.state.fullPath)}
                  className="zk-node-container">
               <div className="zk-node-left-pane">
-                {this.renderExpandChildrenPlaceholder()}
-                {this.props.data.name}
+                <span className="zk-node-expand-icon">{this.renderExpandChildrenPlaceholder()}</span>
+                <span className="zk-node-foldername">{this.props.data.name}</span>
               </div>
               <div
                 className={(this.state.showEditButtons) ? ("zk-node-right-pane zk-node-edit-buttons-show") : ("zk-node-right-pane zk-node-edit-buttons-hide")}>
