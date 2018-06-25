@@ -9,7 +9,8 @@ class Branch extends Component {
     this.state = {
       loading: true,
       componentType: "sibling",
-      collapsed: false
+      collapsed: false,
+      showEditButtons: false
     };
     // name, children[], active, collapsed, icon, level, canEdit, canDelete
     this.onMouseOver = this.onMouseOver.bind(this);
@@ -18,7 +19,11 @@ class Branch extends Component {
   }
 
   componentWillMount() {
-    this.setState({collapsed: this.props.data.collapsed});
+    // var should = false;
+    // if(!this.props.data.children) {
+    //   should = true;
+    // }
+    this.setState({collapsed: this.props.data.collapsed });
   }
 
   renderChildren() {
@@ -54,18 +59,6 @@ class Branch extends Component {
     }
   }
 
-  renderNodeButtons() {
-    if(!this.props.data.checkedHasChildren || this.props.data.children > 0) {
-      return;
-    }
-    if(!this.props.data.children) {
-      return <div className="zk-node-buttons">
-        <span className="zk-node-edit-button">edit</span>
-        <span className="zk-node-delete-button">delete</span>
-      </div>
-    }
-  }
-
   render() {
     return (
       <div>
@@ -79,8 +72,11 @@ class Branch extends Component {
               {this.renderExpandChildrenPlaceholder()}
               {this.props.data.name}
             </div>
-            <div className="zk-node-right-pane">
-              {this.renderNodeButtons()}
+            <div className={(this.state.showEditButtons) ? ("zk-node-right-pane zk-node-edit-buttons-show") : ("zk-node-right-pane zk-node-edit-buttons-hide")}>
+              <div className="zk-node-buttons">
+                <span className="zk-node-edit-button">edit</span>
+                <span className="zk-node-delete-button">delete</span>
+              </div>
             </div>
           </div>
           {this.renderLoading()}
@@ -92,10 +88,26 @@ class Branch extends Component {
 
   onMouseOver = function() {
     this.setState({componentType: "current"});
+    if(!this.props.data.checkedHasChildren) {
+      console.log("Not showing edit buttons since we have not checked if there are child nodes");
+      this.setState({ showEditButtons: false });
+      return;
+    }
+    if(this.props.data.children) {
+      if(this.props.data.children.length > 0) {
+        console.log("Not showing edit buttons since this node has children");
+        this.setState({ showEditButtons: false });
+        return;
+      }
+    }
+    this.setState({ showEditButtons: true });
   };
 
   mouseOut = function() {
-    this.setState({componentType: "sibling"});
+    this.setState({
+      componentType: "sibling",
+      showEditButtons: false
+    });
   };
 
   clickToExpand = function() {
