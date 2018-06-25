@@ -113,13 +113,11 @@ class Branch extends Component {
   onMouseOver = function () {
     this.setState({componentType: "current"});
     if (!this.props.data.checkedHasChildren) {
-      console.log("Not showing edit buttons since we have not checked if there are child nodes");
       this.setState({showEditButtons: false});
       return;
     }
     if (this.props.data.children) {
       if (this.props.data.children.length > 0) {
-        console.log("Not showing edit buttons since this node has children");
         this.setState({showEditButtons: false});
         return;
       }
@@ -135,7 +133,6 @@ class Branch extends Component {
   };
 
   clicked = function (path) {
-    console.log("Clicked at div: " + path);
     this.props.clicked(path);
     this.setState({collapsed: !this.state.collapsed})
   };

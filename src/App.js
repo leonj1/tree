@@ -129,7 +129,6 @@ class App extends Component {
   }
 
   branchClicked = function(path) {
-    console.log("Clicked at root: " + path);
     this.setState({fullPath: path});
   }
 }
