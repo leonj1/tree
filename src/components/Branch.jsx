@@ -71,33 +71,40 @@ class Branch extends Component {
   render() {
     return (
       <div>
-        <div className={(this.props.data.loading ? "loading" : this.props.thestyle) + " " + this.state.componentType}
-             style={{paddingLeft: this.props.level * 15}}>
-          <div onMouseOver={this.onMouseOver}
-               onMouseLeave={this.mouseOut}
-               onClick={() => this.clicked(this.state.fullPath)}
-               className="zk-node-container">
-            <div className="zk-node-left-pane">
-              {this.renderExpandChildrenPlaceholder()}
-              {this.props.data.name}
-            </div>
-            <div
-              className={(this.state.showEditButtons) ? ("zk-node-right-pane zk-node-edit-buttons-show") : ("zk-node-right-pane zk-node-edit-buttons-hide")}>
-              <div className="zk-node-buttons">
+        {this.props.data.name === 'Loading' ? (
+          <div className={this.props.thestyle + " loading"}
+               style={{paddingLeft: this.props.level * 15}}>
+            Loading
+          </div>
+        ) : (
+          <div className={this.props.thestyle + " " + this.state.componentType}
+               style={{paddingLeft: this.props.level * 15}}>
+            <div onMouseOver={this.onMouseOver}
+                 onMouseLeave={this.mouseOut}
+                 onClick={() => this.clicked(this.state.fullPath)}
+                 className="zk-node-container">
+              <div className="zk-node-left-pane">
+                {this.renderExpandChildrenPlaceholder()}
+                {this.props.data.name}
+              </div>
+              <div
+                className={(this.state.showEditButtons) ? ("zk-node-right-pane zk-node-edit-buttons-show") : ("zk-node-right-pane zk-node-edit-buttons-hide")}>
+                <div className="zk-node-buttons">
                 <span className="zk-node-edit-button"
                       onClick={() => this.renameNode(this.state.fullPath)}>
                   rename
                 </span>
-                <span className="zk-node-delete-button"
-                      onClick={() => this.deletingNode(this.state.fullPath)}>
+                  <span className="zk-node-delete-button"
+                        onClick={() => this.deletingNode(this.state.fullPath)}>
                   delete
                 </span>
+                </div>
               </div>
             </div>
+            {this.renderLoading()}
+            {this.renderChildren()}
           </div>
-          {this.renderLoading()}
-          {this.renderChildren()}
-        </div>
+        )}
       </div>
     );
   }
