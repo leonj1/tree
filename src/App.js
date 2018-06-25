@@ -43,7 +43,7 @@ const contents = {
       name: "node_modules",
       loading: true,
       collapsed: true,
-      checkedHasChildren: true,
+      checkedHasChildren: false,
       children: []
     },
     {

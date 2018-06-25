@@ -42,3 +42,22 @@
 .zk-node-edit-buttons-hide {
     visibility: hidden;
 }
+
+.zk-node-edit-button {
+    color: orange;
+    padding: 4px;
+}
+
+.zk-node-edit-button:hover {
+    background-color: antiquewhite;
+}
+
+.zk-node-delete-button {
+    color: orange;
+    margin-left: 10px;
+    padding: 4px;
+}
+
+.zk-node-delete-button:hover {
+    background-color: antiquewhite;
+}
