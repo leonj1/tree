@@ -45,7 +45,7 @@ class Branch extends Component {
 
   renderLoading() {
     if (!this.state.collapsed && this.props.data.loading) {
-      var loading = {
+      let loading = {
         name: "Loading"
       };
       return <Branch key="loading"
@@ -87,7 +87,7 @@ class Branch extends Component {
                   edit
                 </span>
                 <span className="zk-node-delete-button"
-                      onClick={this.deletingNode}>
+                      onClick={() => this.deletingNode(this.state.fullPath)}>
                   delete
                 </span>
               </div>
@@ -104,8 +104,8 @@ class Branch extends Component {
     console.log("Clicked edit");
   };
 
-  deletingNode = function () {
-    console.log("Clicked delete: " + this.props.data.parent + "/" + this.props.data.name);
+  deletingNode = function (path) {
+    console.log("Clicked delete: " + path);
   };
 
   onMouseOver = function () {
