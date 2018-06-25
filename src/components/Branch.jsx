@@ -10,7 +10,8 @@ class Branch extends Component {
       loading: true,
       componentType: "sibling",
       collapsed: false,
-      showEditButtons: false
+      showEditButtons: false,
+      fullPath: ""
     };
     // name, children[], active, collapsed, icon, level, canEdit, canDelete
     this.onMouseOver = this.onMouseOver.bind(this);
@@ -21,11 +22,11 @@ class Branch extends Component {
   }
 
   componentWillMount() {
-    // var should = false;
-    // if(!this.props.data.children) {
-    //   should = true;
-    // }
-    this.setState({collapsed: this.props.data.collapsed});
+    let _startOfFullPath = (this.props.parent === "//" ? "" : this.props.parent);
+    this.setState({
+      collapsed: this.props.data.collapsed,
+      fullPath: _startOfFullPath + "/" + this.props.data.name
+    });
   }
 
   renderChildren() {
@@ -34,9 +35,11 @@ class Branch extends Component {
     }
     return this.props.data.children.map((c) =>
       <Branch key={c.name}
+              parent={this.state.fullPath}
               data={c}
               thestyle={this.props.thestyle}
-              level={this.props.level + 1}/>
+              level={this.props.level + 1}
+              onDelete={this.deletingNode}/>
     );
   };
 
@@ -46,9 +49,11 @@ class Branch extends Component {
         name: "Loading"
       };
       return <Branch key="loading"
+                     parent=""
                      data={loading}
                      thestyle={this.props.thestyle}
-                     level={this.props.level + 1}/>
+                     level={this.props.level + 1}
+                     onDelete={this.deletingNode}/>
     }
   }
 
@@ -100,7 +105,7 @@ class Branch extends Component {
   };
 
   deletingNode = function () {
-    console.log("Clicked delete");
+    console.log("Clicked delete: " + this.props.data.parent + "/" + this.props.data.name);
   };
 
   onMouseOver = function () {
@@ -138,7 +143,9 @@ Branch.propTypes = {
     name: PropTypes.string.isRequired
   }).isRequired,
   thestyle: PropTypes.string.isRequired,
-  level: PropTypes.number.isRequired
+  level: PropTypes.number.isRequired,
+  parent: PropTypes.string.isRequired,
+  onDelete: PropTypes.func.isRequired
 };
 
 export default Branch;

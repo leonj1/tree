@@ -101,6 +101,7 @@ class App extends Component {
         <div className="app-container">
           <div className="app-left-pane">
             <Branch key="root"
+                    parent=""
                     data={contents}
                     thestyle="tree-branch"
                     level={1}/>
