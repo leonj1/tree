@@ -96,7 +96,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      fullPath: ""
+      fullPath: "/"
     };
     this.branchClicked = this.branchClicked.bind(this)
   }
@@ -107,7 +107,7 @@ class App extends Component {
         <header className="App-header">
           <h1 className="App-title">Tree</h1>
         </header>
-        <div className="zk-path-container">
+        <div>
           <ZkPath path={this.state.fullPath}
                   edit={this.branchClicked}/>
         </div>

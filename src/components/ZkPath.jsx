@@ -10,7 +10,7 @@ class ZkPath extends Component {
 
   render() {
     return (
-      <div>
+      <div className="zk-path-container">
         <span className="zk-path-label">
           Path:
         </span>
