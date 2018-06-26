@@ -12,8 +12,8 @@ class ZkPath extends Component {
           Path:
         </span>
         <span className="zk-path">
-          {this.props.path}
-          </span>
+          <input className="zk-path-input" type="text" placeholder="ZK path" value={this.props.path}/>
+        </span>
       </div>
     );
   }

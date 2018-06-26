@@ -65,6 +65,7 @@
 }
 
 .zk-path-container {
+    display: flex;
     text-align: left;
     padding: 10px 0;
 }
@@ -73,13 +74,23 @@
     text-align: left;
     padding-top: 10px;
     padding-bottom: 10px;
+    margin-left: 10px;
 }
 
 .zk-path {
+    flex: 4;
+    margin-left: 20px;
+    display: flex;
+}
+
+.zk-path-input {
+    flex: 1;
     text-align: left;
     padding-top: 10px;
     padding-bottom: 10px;
-    padding-left: 20px;
+    padding-left: 10px;
+    font-size: 16px;
+    margin-right: 10px;
 }
 
 /* style for the expand/collapse icon */
