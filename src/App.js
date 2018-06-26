@@ -1,8 +1,6 @@
 import React, {Component} from 'react';
+import Tree from './components/Tree';
 import './App.css';
-import './components/Tree.css';
-import Branch from './components/Branch';
-import ZkPath from './components/ZkPath';
 
 const contents = {
   name: "/",
@@ -93,13 +91,6 @@ const contents = {
 };
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      fullPath: "/"
-    };
-    this.branchClicked = this.branchClicked.bind(this)
-  }
 
   render() {
     return (
@@ -107,33 +98,12 @@ class App extends Component {
         <header className="App-header">
           <h1 className="App-title">Tree</h1>
         </header>
-        <div>
-          <ZkPath path={this.state.fullPath}
-                  edit={this.branchClicked}/>
-        </div>
-        <div className="app-container">
-          <div className="app-left-pane">
-            <Branch key="root"
-                    parent=""
-                    clicked={this.branchClicked}
-                    data={contents}
-                    thestyle="tree-branch"
-                    level={1}/>
-          </div>
-          <div className="app-right-pane">
-            some stuff here
-          </div>
-        </div>
+        <Tree data={contents}
+              openNode="/engines/def"/>
       </div>
     );
   }
 
-  branchClicked = function(path) {
-    if(path === "//") {
-      path = "/";
-    }
-    this.setState({fullPath: path});
-  }
 }
 
 export default App;

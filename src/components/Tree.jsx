@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import Branch from './Branch';
+import ZkPath from './ZkPath';
 import './Tree.css';
 
 class Tree extends Component {
@@ -8,59 +9,54 @@ class Tree extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      loading: true,
-      level: 1,
-      style: "tree-branch",
-      collapsed: true
+      fullPath: "/"
     };
-    // name, children[], active, collapsed, icon, canEdit, canDelete
-    // onChange
-    // linkable ZK paths /engines/solr/foo
-    this.clickToExpand = this.clickToExpand.bind(this);
-    this.onMouseOver = this.onMouseOver.bind(this);
+    this.branchClicked = this.branchClicked.bind(this)
   }
 
   componentWillMount() {
-    this.setState({collapsed: this.props.contents.collapsed});
+    this.setState({fullPath: this.props.openNode})
   }
-
-  renderChildren() {
-    if(!this.props.contents.children || this.state.collapsed) {
-      return;
-    }
-    return this.props.contents.children.map((c) =>
-      <Branch key={c.name}
-              data={c}
-              thestyle={this.state.style}
-              level={this.state.level + 1}/>
-    );
-  };
 
   render() {
     return (
-      <div className="tree-branch">
-        <div onClick={this.clickToExpand}
-             onMouseOver={this.onMouseOver}>
-          {this.props.contents.name}
+      <div>
+        <div>
+          <ZkPath path={this.state.fullPath}
+                  edit={this.branchClicked}/>
         </div>
-        {this.renderChildren()}
+        <div className="app-container">
+          <div className="app-left-pane">
+            <Branch key="root"
+                    parent=""
+                    openNode={this.props.openNode}
+                    clicked={this.branchClicked}
+                    data={this.props.data}
+                    thestyle="tree-branch"
+                    level={1}/>
+          </div>
+          <div className="app-right-pane">
+            some stuff here
+          </div>
+        </div>
       </div>
     );
   }
 
-  clickToExpand = function() {
-    this.setState({collapsed: !this.state.collapsed})
-  };
-
-  onMouseOver = function() {
-
+  branchClicked = function(path) {
+    if(path === "//") {
+      path = "/";
+    }
+    this.setState({fullPath: path});
   }
+
 }
 
 Tree.propTypes = {
-  contents: PropTypes.shape({
+  data: PropTypes.shape({
     name: PropTypes.string.isRequired
-  }).isRequired
+  }).isRequired,
+  openNode: PropTypes.string
 };
 
 export default Tree;

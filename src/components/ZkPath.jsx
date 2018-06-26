@@ -4,9 +4,6 @@ import './Tree.css';
 import Branch from "./Branch";
 
 class ZkPath extends Component {
-  constructor(props) {
-    super(props);
-  }
 
   render() {
     return (

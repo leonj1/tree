@@ -22,9 +22,20 @@ class Branch extends Component {
   }
 
   componentWillMount() {
-    let _startOfFullPath = (this.props.parent === "//" ? "" : this.props.parent);
+    let _startOfFullPath = (this.props.parent === "//" ? "" : this.props.parent),
+      shouldBeCollapsed = true;
+    if (this.props.openNode && this.props.data.name !== "/") {
+      let tmpArray = this.props.openNode.split("/");
+      let tokenToCompare = tmpArray[this.props.level - 1];
+      if (tokenToCompare === this.props.data.name) {
+        shouldBeCollapsed = false;
+      }
+    } else {
+      shouldBeCollapsed = this.props.data.collapsed;
+    }
+    // console.log(this.props.data.name + " shouldBeCollapsed: " + shouldBeCollapsed);
     this.setState({
-      collapsed: this.props.data.collapsed,
+      collapsed: shouldBeCollapsed,
       fullPath: _startOfFullPath + "/" + this.props.data.name
     });
   }
@@ -37,6 +48,7 @@ class Branch extends Component {
       <Branch key={c.name}
               parent={this.state.fullPath}
               data={c}
+              openNode={this.props.openNode}
               thestyle={this.props.thestyle}
               level={this.props.level + 1}
               clicked={this.props.clicked}
@@ -52,6 +64,7 @@ class Branch extends Component {
       return <Branch key="loading"
                      parent=""
                      data={loading}
+                     openNode={this.props.openNode}
                      thestyle={this.props.thestyle}
                      level={this.props.level + 1}
                      clicked={this.props.clicked}
@@ -155,8 +168,9 @@ Branch.propTypes = {
   thestyle: PropTypes.string.isRequired,
   level: PropTypes.number.isRequired,
   parent: PropTypes.string.isRequired,
-  onDelete: PropTypes.func.isRequired,
-  clicked: PropTypes.func.isRequired
+  clicked: PropTypes.func.isRequired,
+  onDelete: PropTypes.func,
+  openNode: PropTypes.string
 };
 
 export default Branch;
