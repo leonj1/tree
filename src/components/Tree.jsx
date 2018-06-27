@@ -15,24 +15,27 @@ class Tree extends Component {
     this.onPathChange = this.onPathChange.bind(this);
   }
 
-  componentWillMount() {
-    this.setState({fullPath: this.props.openNode})
+  componentDidMount() {
+    this.setState({fullPath: this.props.openNode});
   }
 
   render() {
+    const fullPath = this.state.fullPath;
+    const data = this.props.data;
+
     return (
       <div>
         <div>
-          <ZkPath path={this.state.fullPath}
+          <ZkPath path={fullPath}
                   onPathChange={this.onPathChange}/>
         </div>
         <div className="app-container">
           <div className="app-left-pane">
             <Branch key="root"
                     parent=""
-                    openNode={this.state.fullPath}
+                    openNode={fullPath}
                     clicked={this.branchClicked}
-                    data={this.props.data}
+                    data={data}
                     thestyle="tree-branch"
                     level={1}/>
           </div>
@@ -48,17 +51,15 @@ class Tree extends Component {
     if(path === "//") {
       path = "/";
     }
+    console.log("branchClicked: " + path);
     this.setState({fullPath: path});
   };
 
 
   onPathChange = function(e) {
-    console.log("KeyDown: " + e.keyCode);
-    if(e.keyCode === 13) {
-      this.setState({fullPath: e.target.value});
-    }
+    console.log("fullPath after: " + e.target.value);
+    this.setState({fullPath: String(e.target.value)});
   }
-
 }
 
 Tree.propTypes = {

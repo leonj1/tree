@@ -19,25 +19,16 @@ class Branch extends Component {
     this.clicked = this.clicked.bind(this);
     this.renameNode = this.renameNode.bind(this);
     this.deletingNode = this.deletingNode.bind(this);
+    this.handleStuff = this.handleStuff.bind(this);
   }
 
-  componentWillMount() {
-    let _startOfFullPath = (this.props.parent === "//" ? "" : this.props.parent),
-      shouldBeCollapsed = true;
-    if (this.props.openNode && this.props.data.name !== "/") {
-      let tmpArray = this.props.openNode.split("/");
-      let tokenToCompare = tmpArray[this.props.level - 1];
-      if (tokenToCompare === this.props.data.name) {
-        shouldBeCollapsed = false;
-      }
-    } else {
-      shouldBeCollapsed = this.props.data.collapsed;
-    }
-    // console.log(this.props.data.name + " shouldBeCollapsed: " + shouldBeCollapsed);
-    this.setState({
-      collapsed: shouldBeCollapsed,
-      fullPath: _startOfFullPath + "/" + this.props.data.name
-    });
+  componentWillReceiveProps(nextProps) {
+    console.log(nextProps.openNode + ":" + this.props.openNode);
+    this.handleStuff();
+  }
+
+  componentDidMount() {
+    this.handleStuff();
   }
 
   renderChildren() {
@@ -83,34 +74,40 @@ class Branch extends Component {
 
   render() {
     const folderIndentation = 6;
+    const style = this.props.thestyle;
+    const componentType = this.state.componentType;
+    const level = this.props.level;
+    const fullPath = this.state.fullPath;
+    const name = this.props.data.name;
+    const showEditButtons = this.state.showEditButtons;
 
     return (
       <div>
         {this.props.data.name === 'Loading' ? (
-          <div className={this.props.thestyle + " loading"}
-               style={{paddingLeft: this.props.level * folderIndentation}}>
+          <div className={style + " loading"}
+               style={{paddingLeft: level * folderIndentation}}>
             Loading
           </div>
         ) : (
-          <div className={this.props.thestyle + " " + this.state.componentType}
-               style={{paddingLeft: this.props.level * folderIndentation}}>
+          <div className={style + " " + componentType}
+               style={{paddingLeft: level * folderIndentation}}>
             <div onMouseOver={this.onMouseOver}
                  onMouseLeave={this.mouseOut}
-                 onClick={() => this.clicked(this.state.fullPath)}
+                 onClick={() => this.clicked(fullPath)}
                  className="zk-node-container">
               <div className="zk-node-left-pane">
                 <span className="zk-node-expand-icon">{this.renderExpandChildrenPlaceholder()}</span>
-                <span className="zk-node-foldername">{this.props.data.name}</span>
+                <span className="zk-node-foldername">{name}</span>
               </div>
               <div
-                className={(this.state.showEditButtons) ? ("zk-node-right-pane zk-node-edit-buttons-show") : ("zk-node-right-pane zk-node-edit-buttons-hide")}>
+                className={(showEditButtons) ? ("zk-node-right-pane zk-node-edit-buttons-show") : ("zk-node-right-pane zk-node-edit-buttons-hide")}>
                 <div className="zk-node-buttons">
                 <span className="zk-node-edit-button"
-                      onClick={() => this.renameNode(this.state.fullPath)}>
+                      onClick={() => this.renameNode(fullPath)}>
                   rename
                 </span>
                   <span className="zk-node-delete-button"
-                        onClick={() => this.deletingNode(this.state.fullPath)}>
+                        onClick={() => this.deletingNode(fullPath)}>
                   delete
                 </span>
                 </div>
@@ -130,6 +127,25 @@ class Branch extends Component {
 
   deletingNode = function (path) {
     console.log("Clicked delete: " + path);
+  };
+
+  handleStuff = function() {
+    let _startOfFullPath = (this.props.parent === "//" ? "" : this.props.parent),
+      shouldBeCollapsed = true;
+    if (this.props.openNode && this.props.data.name !== "/") {
+      let tmpArray = this.props.openNode.split("/");
+      let tokenToCompare = tmpArray[this.props.level - 1];
+      if (tokenToCompare === this.props.data.name) {
+        shouldBeCollapsed = false;
+      }
+    } else {
+      shouldBeCollapsed = this.props.data.collapsed;
+    }
+    console.log(this.props.data.name + " shouldBeCollapsed: " + shouldBeCollapsed);
+    this.setState({
+      collapsed: shouldBeCollapsed,
+      fullPath: _startOfFullPath + "/" + this.props.data.name
+    });
   };
 
   onMouseOver = function () {
@@ -155,6 +171,7 @@ class Branch extends Component {
   };
 
   clicked = function (path) {
+    console.log("Clicked: " + path);
     this.props.clicked(path);
     this.setState({collapsed: !this.state.collapsed})
   };
