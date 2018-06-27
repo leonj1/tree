@@ -42,7 +42,6 @@ class ZkPath extends Component {
 
 ZkPath.propTypes = {
   path: PropTypes.string.isRequired,
-  edit: PropTypes.func.isRequired,
   onPathChange: PropTypes.func
 };
 

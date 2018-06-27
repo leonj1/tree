@@ -24,7 +24,6 @@ class Tree extends Component {
       <div>
         <div>
           <ZkPath path={this.state.fullPath}
-                  edit={this.branchClicked}
                   onPathChange={this.onPathChange}/>
         </div>
         <div className="app-container">
