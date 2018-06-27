@@ -15,13 +15,14 @@ class Tree extends Component {
     this.onPathChange = this.onPathChange.bind(this);
   }
 
-  componentDidMount() {
+  componentWillMount() {
     this.setState({fullPath: this.props.openNode});
   }
 
   render() {
     const fullPath = this.state.fullPath;
     const data = this.props.data;
+    console.log("Tree openNode: " + fullPath);
 
     return (
       <div>
@@ -57,7 +58,7 @@ class Tree extends Component {
 
 
   onPathChange = function(e) {
-    console.log("fullPath after: " + e.target.value);
+    // console.log("fullPath after: " + e.target.value);
     this.setState({fullPath: String(e.target.value)});
   }
 }

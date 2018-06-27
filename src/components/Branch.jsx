@@ -22,14 +22,43 @@ class Branch extends Component {
     this.handleStuff = this.handleStuff.bind(this);
   }
 
+  componentWillMount() {
+    // this.setState({fullPath: this.props.openNode});
+  }
+
   componentWillReceiveProps(nextProps) {
     console.log(nextProps.openNode + ":" + this.props.openNode);
-    this.handleStuff();
+    // this.handleStuff();
+    let tmpArray = this.props.openNode.split("/");
+    let tokenToCompare = tmpArray[this.props.level - 1];
+    if (tokenToCompare === this.props.data.name) {
+      this.setState({collapsed: false});
+    }
   }
 
   componentDidMount() {
     this.handleStuff();
   }
+
+  handleStuff = function() {
+    let _startOfFullPath = (this.props.parent === "//" ? "" : this.props.parent),
+      shouldBeCollapsed = true;
+    // console.log(this.props.level + ":" + this.props.data.name + ":" + this.props.parent + ":" + this.props.openNode);
+    if (this.props.openNode && this.props.data.name !== "/") {
+      let tmpArray = this.props.openNode.split("/");
+      let tokenToCompare = tmpArray[this.props.level - 1];
+      if (tokenToCompare === this.props.data.name) {
+        shouldBeCollapsed = false;
+      }
+    } else {
+      shouldBeCollapsed = this.props.data.collapsed;
+    }
+    // console.log(this.props.data.name + " shouldBeCollapsed: " + shouldBeCollapsed);
+    this.setState({
+      collapsed: shouldBeCollapsed,
+      fullPath: _startOfFullPath + "/" + this.props.data.name
+    });
+  };
 
   renderChildren() {
     if (!this.props.data.children || this.state.collapsed) {
@@ -129,25 +158,6 @@ class Branch extends Component {
     console.log("Clicked delete: " + path);
   };
 
-  handleStuff = function() {
-    let _startOfFullPath = (this.props.parent === "//" ? "" : this.props.parent),
-      shouldBeCollapsed = true;
-    if (this.props.openNode && this.props.data.name !== "/") {
-      let tmpArray = this.props.openNode.split("/");
-      let tokenToCompare = tmpArray[this.props.level - 1];
-      if (tokenToCompare === this.props.data.name) {
-        shouldBeCollapsed = false;
-      }
-    } else {
-      shouldBeCollapsed = this.props.data.collapsed;
-    }
-    console.log(this.props.data.name + " shouldBeCollapsed: " + shouldBeCollapsed);
-    this.setState({
-      collapsed: shouldBeCollapsed,
-      fullPath: _startOfFullPath + "/" + this.props.data.name
-    });
-  };
-
   onMouseOver = function () {
     this.setState({componentType: "current"});
     if (!this.props.data.checkedHasChildren) {
@@ -172,8 +182,8 @@ class Branch extends Component {
 
   clicked = function (path) {
     console.log("Clicked: " + path);
+    this.setState({collapsed: !this.state.collapsed});
     this.props.clicked(path);
-    this.setState({collapsed: !this.state.collapsed})
   };
 
 }
