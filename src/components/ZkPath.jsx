@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import './Tree.css';
-import Branch from "./Branch";
 
 class ZkPath extends Component {
 
@@ -41,7 +40,7 @@ class ZkPath extends Component {
   }
 }
 
-Branch.propTypes = {
+ZkPath.propTypes = {
   path: PropTypes.string.isRequired,
   edit: PropTypes.func.isRequired,
   onPathChange: PropTypes.func
