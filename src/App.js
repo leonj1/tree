@@ -1,6 +1,13 @@
 import React, {Component} from 'react';
-import Tree from './components/Tree';
+import ZkUi from './ZkUi';
 import './App.css';
+
+import { connect } from 'react-redux';
+import { submitSecret, fetchSecret, clearPastRequest } from './redux/actions';
+import {
+  BrowserRouter as Router,
+  Route,
+} from 'react-router-dom';
 
 const contents = {
   name: "/",
@@ -94,16 +101,57 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <h1 className="App-title">Tree</h1>
-        </header>
-        <Tree data={contents}
-              openNode="/engines/def"/>
-      </div>
+      <Router>
+        <div>
+          <Route path="/:bri" render={(props) => (
+            <ZkUi/>
+          )}/>
+        </div>
+      </Router>
     );
+  }
+
+  createSecretHandler = secret => {
+    this.props.createSecretProp(secret);
+  };
+
+  fetchSecret = token => {
+    this.props.fetchSecretProp(token);
+  };
+
+  clearRequest = () => {
+    this.props.clearPastRequest();
   }
 
 }
 
-export default App;
+// export default App;
+
+const mapStateToProps = state => {
+  return {
+    secret: state.secret,
+    token: state.token,
+    request: state.request
+  }
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    createSecretProp: function(secret) {
+      dispatch(submitSecret(secret));
+    },
+    fetchSecretProp: function(token) {
+      dispatch(fetchSecret(token));
+    },
+    clearPastRequest: function() {
+      dispatch(clearPastRequest());
+    }
+  }
+};
+
+const ReduxApp = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App);
+
+export default ReduxApp;
