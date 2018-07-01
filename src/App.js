@@ -1,13 +1,18 @@
 import React, {Component} from 'react';
 import ZkUi from './ZkUi';
 import './App.css';
+import { connect } from "react-redux";
 
-import { connect } from 'react-redux';
-import { submitSecret, fetchSecret, clearPastRequest } from './redux/actions';
 import {
   BrowserRouter as Router,
   Route,
 } from 'react-router-dom';
+import {
+  FAILED_GET_INITIAL_PATH,
+  START_GET_INITIAL_PATH,
+  SUCCESS_GET_INITIAL_PATH,
+  getInitialPath
+} from "./redux/actions";
 
 const contents = {
   name: "/",
@@ -98,53 +103,42 @@ const contents = {
 };
 
 class App extends Component {
-
+  constructor(props) {
+    super(props);
+    this.changePathHandler = this.changePathHandler.bind(this);
+  }
   render() {
     return (
       <Router>
         <div>
-          <Route path="/:bri" render={(props) => (
-            <ZkUi/>
+          <Route path="/:bri" render={() => (
+            <ZkUi getInitialPathFoo={this.changePathHandler}
+                  status={this.props.status}
+                  contents={this.props.contents}/>
           )}/>
         </div>
       </Router>
     );
   }
 
-  createSecretHandler = secret => {
-    this.props.createSecretProp(secret);
-  };
-
-  fetchSecret = token => {
-    this.props.fetchSecretProp(token);
-  };
-
-  clearRequest = () => {
-    this.props.clearPastRequest();
+  changePathHandler = function(resource, path) {
+    this.props.getInitialPathProp(resource, path);
   }
-
 }
-
-// export default App;
 
 const mapStateToProps = state => {
   return {
-    secret: state.secret,
-    token: state.token,
-    request: state.request
+    request: state.request,
+    status: state.status,
+    contents: state.contents
   }
 };
 
+// redux actions
 const mapDispatchToProps = dispatch => {
   return {
-    createSecretProp: function(secret) {
-      dispatch(submitSecret(secret));
-    },
-    fetchSecretProp: function(token) {
-      dispatch(fetchSecret(token));
-    },
-    clearPastRequest: function() {
-      dispatch(clearPastRequest());
+    getInitialPathProp: function(resource, path) {
+      dispatch(getInitialPath(resource, path));
     }
   }
 };

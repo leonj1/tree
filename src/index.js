@@ -3,87 +3,52 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
-
-import { createStore, compose, applyMiddleware } from 'redux';
-import { Provider } from 'react-redux';
-import { START_CREATE_SECRET, FAILED_CREATE_SECRET, SUCCESS_CREATE_SECRET, START_FETCH_SECRET, FAILED_FETCH_SECRET, SUCCESS_FETCH_SECRET, CLEAR_PREVIOUS_REQUEST } from './redux/actions';
 import createSagaMiddleware from 'redux-saga';
 import rootSaga from './sagas/apiSaga';
+import { createStore, compose, applyMiddleware } from 'redux';
+import {FAILED_GET_INITIAL_PATH, START_GET_INITIAL_PATH, SUCCESS_GET_INITIAL_PATH} from "./redux/actions";
+import { Provider } from 'react-redux';
 
 const initialState = {
-  secret: {
-    message: "",
-    expiryMinutes: 60,
-    password: ""
+  resource: {
+    bri: "",
+    path: ""
   },
-  token: "",
-  request: {
-    status: 200,
-    reason: ""
-  }
+  status: {
+    fetched: false,
+    responseStatus: 0,
+    message: ""
+  },
+  contents: ""
 };
-
-// reducers
-function startCreatingSecret(action) {
-  return action.payload;
-}
-function failedCreatingSecret(action) {
-  return action.payload;
-}
-function startFetchingSecret(action) {
-  return action.token;
-}
 
 // Actions the store should perform when an action is received
 const myReducer = (state = initialState, action) => {
   switch (action.type) {
-    case START_CREATE_SECRET:
+    case START_GET_INITIAL_PATH:
       return {
         ...state,
-        secret: startCreatingSecret(action),
+        resource: action.payload,
       };
-    case FAILED_CREATE_SECRET:
+    case FAILED_GET_INITIAL_PATH:
       return {
         ...state,
-        secret: failedCreatingSecret(action),
-      };
-    case SUCCESS_CREATE_SECRET:
-      return {
-        ...state,
-        token: action.token,
-        secret: {
-          message: "",
-          expiryMinutes: 60,
-          password: ""
-        }
-      };
-    case START_FETCH_SECRET:
-      return {
-        ...state,
-        token: startFetchingSecret(action),
-      };
-    case FAILED_FETCH_SECRET:
-      return {
-        ...state,
-        request: action.request,
-        secret: {
-          message: "",
-          expiryMinutes: 60,
-          password: ""
-        }
-      };
-    case SUCCESS_FETCH_SECRET:
-      return {
-        ...state,
-        secret: {
-          message: action.payload.contents
+        status: {
+          fetched: true,
+          responseStatus: action.request.status,
+          message: action.request.reason
         },
-        request: action.payload.request
+        contents: {}
       };
-    case CLEAR_PREVIOUS_REQUEST:
+    case SUCCESS_GET_INITIAL_PATH:
       return {
         ...state,
-        request: action.payload
+        status: {
+          fetched: true,
+          responseStatus: 200,
+          message: ""
+        },
+        contents: action.payload.contents
       };
     default:
       return state;
