@@ -43,10 +43,18 @@
     visibility: hidden;
 }
 
+.zk-node-create-buttons-hide {
+    visibility: hidden;
+}
+
 .zk-node-edit-button {
     color: orange;
     padding: 4px;
     text-transform: uppercase;
+}
+
+.zk-node-create-button:hover {
+    background-color: antiquewhite;
 }
 
 .zk-node-edit-button:hover {
@@ -96,8 +104,17 @@
 /* style for the expand/collapse icon */
 .zk-node-expand-icon {
     padding: 0 5px;
+    float: left;
 }
 
 .zk-node-foldername {
+    float: left;
+}
+
+.zk-editable-label-ro {
+
+}
+
+.zk-editable-label-rw {
 
 }

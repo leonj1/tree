@@ -61,10 +61,9 @@ class ZkUi extends Component {
   }
 
   componentWillMount() {
-    let params = convertToObject(window.location.search);
-    let bri = window.location.pathname.replace(/^\/+/g, '');
-    let fixedUrl = params.path.startsWith("/") ?
-      params.path : "/" + params.path;
+    let params = convertToObject(window.location.search),
+        bri = window.location.pathname.replace(/^\/+/g, ''),
+        fixedUrl = params.path.startsWith("/") ? params.path : "/" + params.path;
     this.setState({
       data: this.props.contents,
       status: this.props.status
@@ -82,7 +81,8 @@ class ZkUi extends Component {
         {(this.state.status.fetched ?
           (this.state.status.responseStatus === 200 ?
               <Tree data={this.state.data}
-                    openNode={this.state.data.name}/>
+                    openNode={this.state.data.name}
+                    branchClicked={this.branchClicked}/>
                 :
               <div>{this.state.status.message}</div>
           )
@@ -96,6 +96,10 @@ class ZkUi extends Component {
   getInitialPath = (resource, path) => {
     this.props.getInitialPathFoo(resource, path);
   };
+
+  branchClicked = (path) => {
+    this.props.branchClicked(path);
+  }
 }
 
 ZkUi.prototypes = {

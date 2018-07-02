@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
+import EditableLabel from './EditableLabel';
 import './Tree.css';
 
 class Branch extends Component {
@@ -11,14 +12,17 @@ class Branch extends Component {
       componentType: "sibling",
       collapsed: false,
       showEditButtons: false,
-      fullPath: ""
+      fullPath: "",
+      editing: false
     };
     // name, children[], active, collapsed, icon, level, canEdit, canDelete
     this.onMouseOver = this.onMouseOver.bind(this);
     this.mouseOut = this.mouseOut.bind(this);
     this.clicked = this.clicked.bind(this);
+    this.createNode = this.createNode.bind(this);
     this.renameNode = this.renameNode.bind(this);
     this.deletingNode = this.deletingNode.bind(this);
+    this.finishedEditing = this.finishedEditing.bind(this);
     this.handleStuff = this.handleStuff.bind(this);
   }
 
@@ -126,19 +130,27 @@ class Branch extends Component {
                  className="zk-node-container">
               <div className="zk-node-left-pane">
                 <span className="zk-node-expand-icon">{this.renderExpandChildrenPlaceholder()}</span>
-                <span className="zk-node-foldername">{name}</span>
+                <span className="zk-node-foldername">
+                  <EditableLabel value={name}
+                                 enableEditing={this.state.editing}
+                                 finishedEditing={this.finishedEditing}/>
+                </span>
               </div>
               <div
                 className={(showEditButtons) ? ("zk-node-right-pane zk-node-edit-buttons-show") : ("zk-node-right-pane zk-node-edit-buttons-hide")}>
                 <div className="zk-node-buttons">
-                <span className="zk-node-edit-button"
-                      onClick={() => this.renameNode(fullPath)}>
-                  rename
-                </span>
+                  <span className="zk-node-create-button"
+                        onClick={() => this.createNode(fullPath)}>
+                    create
+                  </span>
+                  <span className="zk-node-edit-button"
+                        onClick={() => this.renameNode(fullPath)}>
+                    rename
+                  </span>
                   <span className="zk-node-delete-button"
                         onClick={() => this.deletingNode(fullPath)}>
-                  delete
-                </span>
+                    delete
+                  </span>
                 </div>
               </div>
             </div>
@@ -150,8 +162,18 @@ class Branch extends Component {
     );
   }
 
+  finishedEditing = function(name) {
+    console.log("Renamed to: " + name);
+    this.setState({editing: false});
+  };
+
+  createNode = function(path) {
+    console.log('Creating node');
+  };
+
   renameNode = function (path) {
     console.log("Clicked rename: " + path);
+    this.setState({editing: true});
   };
 
   deletingNode = function (path) {

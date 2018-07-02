@@ -8,10 +8,8 @@ import {
   Route,
 } from 'react-router-dom';
 import {
-  FAILED_GET_INITIAL_PATH,
-  START_GET_INITIAL_PATH,
-  SUCCESS_GET_INITIAL_PATH,
-  getInitialPath
+  getInitialPath,
+  getPath
 } from "./redux/actions";
 
 const contents = {
@@ -106,15 +104,18 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.changePathHandler = this.changePathHandler.bind(this);
+    this.branchClicked = this.branchClicked.bind(this);
   }
+
   render() {
     return (
       <Router>
         <div>
           <Route path="/:bri" render={() => (
-            <ZkUi getInitialPathFoo={this.changePathHandler}
-                  status={this.props.status}
-                  contents={this.props.contents}/>
+            <ZkUi status={this.props.status}
+                  contents={this.props.contents}
+                  getInitialPathFoo={this.changePathHandler}
+                  branchClicked={this.branchClicked}/>
           )}/>
         </div>
       </Router>
@@ -123,7 +124,11 @@ class App extends Component {
 
   changePathHandler = function(resource, path) {
     this.props.getInitialPathProp(resource, path);
-  }
+  };
+
+  branchClicked = function(path) {
+    this.props.branchClickedProp(path);
+  };
 }
 
 const mapStateToProps = state => {
@@ -139,6 +144,9 @@ const mapDispatchToProps = dispatch => {
   return {
     getInitialPathProp: function(resource, path) {
       dispatch(getInitialPath(resource, path));
+    },
+    branchClickedProp: function(path) {
+      dispatch(getPath(path));
     }
   }
 };

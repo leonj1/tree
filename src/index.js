@@ -6,7 +6,14 @@ import registerServiceWorker from './registerServiceWorker';
 import createSagaMiddleware from 'redux-saga';
 import rootSaga from './sagas/apiSaga';
 import { createStore, compose, applyMiddleware } from 'redux';
-import {FAILED_GET_INITIAL_PATH, START_GET_INITIAL_PATH, SUCCESS_GET_INITIAL_PATH} from "./redux/actions";
+import {
+  FAILED_GET_INITIAL_PATH,
+  START_GET_INITIAL_PATH,
+  SUCCESS_GET_INITIAL_PATH,
+  START_GET_PATH,
+  FAILED_GET_PATH,
+  SUCCESS_GET_PATH
+} from "./redux/actions";
 import { Provider } from 'react-redux';
 
 const initialState = {
@@ -21,6 +28,12 @@ const initialState = {
   },
   contents: ""
 };
+
+function mergeJsonContents(action) {
+
+  return action.token;
+}
+
 
 // Actions the store should perform when an action is received
 const myReducer = (state = initialState, action) => {
@@ -41,6 +54,31 @@ const myReducer = (state = initialState, action) => {
         contents: {}
       };
     case SUCCESS_GET_INITIAL_PATH:
+      return {
+        ...state,
+        status: {
+          fetched: true,
+          responseStatus: 200,
+          message: ""
+        },
+        contents: action.payload.contents
+      };
+    case START_GET_PATH:
+      return {
+        ...state,
+        resource: action.payload,
+      };
+    case FAILED_GET_PATH:
+      return {
+        ...state,
+        status: {
+          fetched: true,
+          responseStatus: action.request.status,
+          message: action.request.reason
+        },
+        contents: {}
+      };
+    case SUCCESS_GET_PATH:
       return {
         ...state,
         status: {
